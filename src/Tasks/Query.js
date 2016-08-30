@@ -153,6 +153,10 @@ export var Query = Task.extend({
     return this;
   },
 
+  lod: function (map) {
+    this.params.lod = map.getZoom();
+  },
+
   _trapSQLerrors: function (error) {
     if (error) {
       if (error.code === '400') {

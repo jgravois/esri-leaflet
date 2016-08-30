@@ -18,7 +18,8 @@ export var FeatureManager = VirtualGrid.extend({
     timeField: false,
     timeFilterMode: 'server',
     simplifyFactor: 0,
-    precision: 6
+    precision: 6,
+    lod: false
   },
 
   /**
@@ -176,6 +177,10 @@ export var FeatureManager = VirtualGrid.extend({
       .where(this.options.where)
       .fields(this.options.fields)
       .precision(this.options.precision);
+
+    if (this.options.lod) {
+      query.lod(this._map);
+    }
 
     if (this.options.simplifyFactor) {
       query.simplify(this._map, this.options.simplifyFactor);

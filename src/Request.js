@@ -107,6 +107,11 @@ function xmlHttpGet (url, params, callback, context) {
       httpRequest.timeout = context.options.timeout;
     }
   }
+
+  if (context && context.options.iwa) {
+    httpRequest.withCredentials = true;
+  }
+
   httpRequest.send(null);
 
   return httpRequest;
@@ -124,6 +129,10 @@ export function request (url, params, callback, context) {
   } else if (requestLength > 2000 && Support.cors) {
     httpRequest.open('POST', url);
     httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  }
+
+  if (context && context.options.iwa) {
+    httpRequest.withCredentials = true;
   }
 
   if (typeof context !== 'undefined' && context !== null) {

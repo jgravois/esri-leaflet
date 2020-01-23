@@ -20,10 +20,6 @@ export var DynamicMapLayer = RasterLayer.extend({
     this.service = mapService(options);
     this.service.addEventParent(this);
 
-    if (options.proxy && options.f !== 'json') {
-      options.f = 'json';
-    }
-
     Util.setOptions(this, options);
   },
 
@@ -193,6 +189,11 @@ export var DynamicMapLayer = RasterLayer.extend({
       }, this);
     } else {
       params.f = 'image';
+      if (this.options.proxy) {
+        this.options.url = this.options.proxy + '?' + this.options.url;
+        // the proxy isnt a normal request parameter, it prepends the url
+        delete params.proxy;
+      }
       this._renderImage(this.options.url + 'export' + Util.getParamString(params), bounds);
     }
   }
